@@ -31,9 +31,5 @@ jobs:
     steps:
       - checkout
       - gcr/gcr-auth
-      - gcr/build-image:
-        image: service
-        tag: 'v0.1.0'
-      - gcr/push-image:
-        image: service
-        tag: 'v0.1.0'
+      - gcr/build-and-push-image:
+          image: service
