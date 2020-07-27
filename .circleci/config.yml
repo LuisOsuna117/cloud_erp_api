@@ -1,8 +1,8 @@
 version: 2.1
 orbs:
-  node: circleci/node@latest
-  gcp-gke: circleci/gcp-gke@latest
-  gcr: circleci/gcp-gcr@latest
+  node: circleci/node@3.0.1
+  gcp-gke: circleci/gcp-gke@1.0.4
+  gcr: circleci/gcp-gcr@0.7.1
 jobs:
   build:
     description: Install npm
