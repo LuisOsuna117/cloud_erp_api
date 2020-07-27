@@ -12,6 +12,10 @@ workflows:
           context: Google
           requires:
             - build
+      - deploy:
+          context: Google
+          requires:
+            - build-and-push
     
 jobs:
   build:
@@ -32,12 +36,26 @@ jobs:
       - checkout
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
-          image: orb-test
-          registry-url: eu.gcr.io
+          image: service
+          registry-url: us.gcr.io
       - gcp-gcr/push-image:
           digest-path: /tmp/digest.txt
-          image: orb-test
-          registry-url: eu.gcr.io
+          image: service
+          registry-url: us.gcr.io
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
+  deploy:
+    machine: true
+    steps:
+      # Install `gcloud` and `kubectl` if not already installed.
+      - gcp-gke/install
+      # Initialize the `gcloud` CLI.
+      - gcp-gke/init
+      # Update a deployment Docker image.
+      run: echo "us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest"
+      - gcp-gke/rollout-image:
+          cluster: c-vdt6j
+          deployment: c-vdt6j
+          container: service-backend
+          image: us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest 
