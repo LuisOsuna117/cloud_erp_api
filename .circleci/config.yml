@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.1
+  node: circleci/node@1.1.6
   gcp-gke: circleci/gcp-gke@1.0.4
   gcr: circleci/gcp-gcr@0.7.1
 workflows:
@@ -10,7 +10,15 @@ workflows:
           context: Google
 jobs:
   build:
-    docker:
-      - image: node:latest
+    machine: true
+    executor:
+      name: node/default
     steps:
-      - run: echo $GOOGLE_COMPUTE_ZONE
+      - checkout
+      - node/install
+      - node/install-npm
+      - node/with-cache:
+            steps:
+              - run: npm install
+            cache-key: package.json
+            use-strict-cache: true
