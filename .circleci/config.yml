@@ -11,6 +11,6 @@ workflows:
 jobs:
   build:
     docker:
-      - image: test:v1
+      - image: node:latest
     steps:
       - run: echo $GOOGLE_COMPUTE_ZONE
