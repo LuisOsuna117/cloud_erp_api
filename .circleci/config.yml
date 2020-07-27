@@ -50,8 +50,8 @@ jobs:
     steps:
       - gcp-gke/install
       - run:
-        command:
-          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+          command: |
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - gcp-gke/rollout-image:
           cluster: cloud-erp-api-cluster
           deployment: cloud-erp-api-cluster
