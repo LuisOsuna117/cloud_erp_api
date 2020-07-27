@@ -10,7 +10,6 @@ workflows:
           context: Google
 jobs:
   build:
-    machine: true
     executor:
       name: node/default
     steps:
