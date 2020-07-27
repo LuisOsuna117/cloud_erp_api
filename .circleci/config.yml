@@ -4,10 +4,15 @@ orbs:
   gcp-gke: circleci/gcp-gke@1.0.4
   gcr: circleci/gcp-gcr@0.7.1
 workflows:
-  build:
+  build-app:
     jobs:
       - build:
           context: Google
+      - build_and_push:
+          context: Google
+          requires:
+            - build
+    
 jobs:
   build:
     executor:
