@@ -26,10 +26,18 @@ jobs:
               - run: npm install
             cache-key: package.json
             use-strict-cache: true
-  build_and_push:
+  build-and-push:
     executor: gcp-gcr/default
     steps:
       - checkout
       - gcp-gcr/gcr-auth
-      - gcp-gcr/build-and-push-image:
-          image: service
+      - gcp-gcr/build-image:
+          image: orb-test
+          registry-url: eu.gcr.io
+      - gcp-gcr/push-image:
+          digest-path: /tmp/digest.txt
+          image: orb-test
+          registry-url: eu.gcr.io
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
