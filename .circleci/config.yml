@@ -51,7 +51,7 @@ jobs:
       - gcp-gke/install
       - run: echo "us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest"
       - gcp-gke/rollout-image:
-          cluster: c-vdt6j
+          cluster: c-vdt6j --zone ${GOOGLE_COMPUTE_ZONE}
           deployment: c-vdt6j
           container: service-backend
           image: us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest 
