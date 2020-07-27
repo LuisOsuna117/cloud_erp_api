@@ -3,52 +3,14 @@ orbs:
   node: circleci/node@3.0.1
   gcp-gke: circleci/gcp-gke@1.0.4
   gcr: circleci/gcp-gcr@0.7.1
+workflows:
+  build:
+    jobs:
+      - build:
+          context: Google
 jobs:
   build:
-    description: Install npm
-    # machine option runs your jobs in a dedicated, ephemeral VM that has the following specifications:
-    machine: true
+    docker:
+      - image: test:v1
     steps:
-      - checkout
-      # Install node
-      - node/install
-      # Install npm
-      - node/install-npm
-      # Download and cache dependencies
-
-  Build-Push-Image-Docker:
-    description: Build and push image to Google Container Registry
-    machine: true
-    steps:
-      - checkout
-      - gcr/gcr-auth
-      - gcr/build-image:
-          image: circle-gke
-          tag: "v2" #Change version number e.g to 'v3' when updating application
-      - gcr/push-image:
-          image: circle-gke
-          tag: "v2" #Change version number e.g to 'v3' when updating application
-    
-  deploy:
-    description: Deploy application to Google Kubernetes Engine
-    machine: true
-    steps:
-      # Install `gcloud` and `kubectl` if not already installed.
-      - gcp-gke/install
-      # Initialize the `gcloud` CLI.
-      - gcp-gke/init
-      # Update a deployment Docker image.
-      - gcp-gke/rollout-image:
-          deployment: service
-          container: service-backend
-          image: gcr.io/circle-ci-demo/circle-gke:v2 # change version when updating
-workflows:
-  build_update_deploy:
-    jobs:
-      - build
-      - Build-Push-Image-Docker:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - Build-Push-Image-Docker
+      - run: echo $GOOGLE_COMPUTE_ZONE
