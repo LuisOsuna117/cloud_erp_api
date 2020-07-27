@@ -37,11 +37,11 @@ jobs:
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
           image: service
-          registry-url: us.gcr.io
+          registry-url: gcr.io
       - gcp-gcr/push-image:
           digest-path: /tmp/digest.txt
           image: service
-          registry-url: us.gcr.io
+          registry-url: gcr.io
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
@@ -50,7 +50,7 @@ jobs:
     steps:
       - gcp-gke/install
       - gcp-gke/rollout-image:
-          cluster: c-vdt6j --zone us-central1-f --project rancher-283923
-          deployment: c-vdt6j
+          cluster: cloud-erp-api-cluster
+          deployment: cloud-erp-api-cluster
           container: service-backend
-          image: us.gcr.io/rancher-283923/service:latest 
+          image: gcr.io/rancher-283923/service:latest 
