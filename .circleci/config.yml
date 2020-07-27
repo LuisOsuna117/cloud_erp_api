@@ -48,12 +48,9 @@ jobs:
   deploy:
     machine: true
     steps:
-      # Install `gcloud` and `kubectl` if not already installed.
       - gcp-gke/install
-      # Initialize the `gcloud` CLI.
       - gcp-gke/init
-      # Update a deployment Docker image.
-      run: echo "us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest"
+      - run: echo "us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest"
       - gcp-gke/rollout-image:
           cluster: c-vdt6j
           deployment: c-vdt6j
