@@ -1,0 +1,19 @@
+{
+  "name": "cloud_erp_api",
+  "version": "0.1.0",
+  "description": "API preparation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisOsuna117/cloud_erp_api.git"
+  },
+  "author": "LuisOsuna117",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/LuisOsuna117/cloud_erp_api/issues"
+  },
+  "homepage": "https://github.com/LuisOsuna117/cloud_erp_api#readme"
+}
