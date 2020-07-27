@@ -1,6 +1,6 @@
 # Welcome to **cloud_erp_api** 
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/github/package-json/v/LuisOsuna117/cloud_erp_api)
 ![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)
 ![License: # Apache](https://img.shields.io/github/license/LuisOsuna117/cloud_erp_api)
 
