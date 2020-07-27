@@ -1,4 +1,4 @@
-# 👋 Welcome to **cloud_erp_api** 🍕
+# Welcome to **cloud_erp_api** 
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 ![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)
@@ -20,9 +20,9 @@ npm install
   + [MySQL](https://www.mysql.com/) - An open-source relational database management system.
 
 ## Author
-👤 **José Luis Moreno | @LuisOsuna117**
+**José Luis Moreno | @LuisOsuna117**
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues and feature requests must follow the following points
 
