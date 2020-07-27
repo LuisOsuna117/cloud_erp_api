@@ -1,8 +1,8 @@
 # 👋 Welcome to **cloud_erp_api** 🍕
-REST API for Cloud ERP app developed in Flutter
+
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
-[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](.)
-[![License: # Apache](https://img.shields.io/badge/license-GNU%20AGPLv3-green)](https://www.gnu.org/licenses/agpl-3.0.en.htm)
+[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)]
+[![License: # Apache](https://img.shields.io/github/license/LuisOsuna117/cloud_erp_api)]
 
 > Foodery is an on-demand delivery app that promises to be the best solution for students to get food in school
 
