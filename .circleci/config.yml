@@ -8,7 +8,7 @@ workflows:
     jobs:
       - build:
           context: Google
-      - build_and_push:
+      - build-and-push:
           context: Google
           requires:
             - build
