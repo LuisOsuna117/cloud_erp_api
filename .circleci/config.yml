@@ -49,7 +49,6 @@ jobs:
     machine: true
     steps:
       - gcp-gke/install
-      - gcp-gke/init
       - run: echo "us.gcr.io/${GOOGLE_PROJECT_ID}/service:latest"
       - gcp-gke/rollout-image:
           cluster: c-vdt6j
