@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
   gcp-gke: circleci/gcp-gke@1.0.4
-  gcr: circleci/gcp-gcr@0.7.1
+  gcp-gcr: circleci/gcp-gcr@0.7.1
 workflows:
   build-app:
     jobs:
@@ -27,9 +27,9 @@ jobs:
             cache-key: package.json
             use-strict-cache: true
   build_and_push:
-    machine: true
+    executor: gcp-gcr/default
     steps:
       - checkout
-      - gcr/gcr-auth
-      - gcr/build-and-push-image:
+      - gcp-gcr/gcr-auth
+      - gcp-gcr/build-and-push-image:
           image: service
