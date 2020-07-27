@@ -21,3 +21,14 @@ jobs:
               - run: npm install
             cache-key: package.json
             use-strict-cache: true
+  build_and_push:
+    machine: true
+    steps:
+      - checkout
+      - gcr/gcr-auth
+      - gcr/build-image:
+        image: service
+        tag: 'v0.1.0'
+      - gcr/push-image:
+        image: service
+        tag: 'v0.1.0'
