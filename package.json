@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/LuisOsuna117/cloud_erp_api/issues"
   },
-  "homepage": "https://github.com/LuisOsuna117/cloud_erp_api#readme"
+  "homepage": "https://github.com/LuisOsuna117/cloud_erp_api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
