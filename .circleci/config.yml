@@ -49,6 +49,7 @@ jobs:
     machine: true
     steps:
       - gcp-gke/install
+      - gcp-gcr/gcr-auth
       - run:
           command: |
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
