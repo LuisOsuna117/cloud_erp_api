@@ -4,7 +4,8 @@
   "description": "Simple REST API example for Cloud ERP App",
   "main": "index.js",
   "scripts": {
-    "test": "index.js"
+    "test": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
