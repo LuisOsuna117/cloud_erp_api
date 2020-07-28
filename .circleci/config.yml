@@ -55,6 +55,6 @@ jobs:
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - gcp-gke/rollout-image:
           cluster: c-fp55x
-          deployment: cloud-erp-api-cluster
-          container: service-backend
+          deployment: service
+          container: service
           image: gcr.io/rancher-283923/service
