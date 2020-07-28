@@ -57,4 +57,4 @@ jobs:
           cluster: cloud-erp-api-cluster
           deployment: cloud-erp-api-cluster
           container: service-backend
-          image: gcr.io/rancher-283923/service:latest 
+          image: gcr.io/rancher-283923/service
