@@ -8,6 +8,10 @@ app.get('/', function (req, res) {
 app.post('/post', function (req, res) {
     res.send('POST');
 });
+
+
+
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
+    console.log(process.env);
 });
