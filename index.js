@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 var app = express();
 
 /* Database configuration */
-require("./config/database");
+const pool = require("./config/database");
 
 app.get('/', function (req, res) {
     res.send('Hello, World!');

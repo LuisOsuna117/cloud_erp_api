@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const util = require("util");
 const keys = require("./keys");
-require("./chalk");
+const log = require("./chalk");
 mysql.createConnection(keys);
 
 const pool = mysql.createPool(keys);
