@@ -6,4 +6,5 @@ module.exports = {
     port: process.env.DB_PORT,
     charset: "utf8mb4",
     timezone: "Z",
+    insecureAuth: true
 };
