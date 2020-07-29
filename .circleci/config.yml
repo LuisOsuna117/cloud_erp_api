@@ -37,11 +37,11 @@ jobs:
       - gcp-gcr/gcr-auth
       - gcp-gcr/build-image:
           image: service
-          registry-url: gcr.io
+          tag: $CIRCLE_SHA1
       - gcp-gcr/push-image:
           digest-path: /tmp/digest.txt
           image: service
-          registry-url: gcr.io
+          tag: $CIRCLE_SHA1
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
@@ -58,3 +58,4 @@ jobs:
           deployment: service
           container: service
           image: gcr.io/rancher-283923/service
+          tag: $CIRCLE_SHA1
