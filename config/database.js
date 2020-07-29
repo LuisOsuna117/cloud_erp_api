@@ -1,7 +1,6 @@
 const mysql = require("mysql");
 const util = require("util");
 const keys = require("./keys");
-const log = require("../strategies/chalk");
 
 mysql.createConnection(keys);
 
