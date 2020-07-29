@@ -5,7 +5,7 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-app.post('/', function (req, res) {
+app.post('/post', function (req, res) {
     res.send('POST');
 });
 app.listen(3000, function () {
