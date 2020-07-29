@@ -1,5 +1,5 @@
 # Set the base image to use for subsequent instructions
-FROM node:alpine
+FROM node:latest
 
 # Add metadata to an image 
 LABEL app="simple-node-application"
