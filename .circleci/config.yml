@@ -57,5 +57,5 @@ jobs:
           cluster: c-mwlvx
           deployment: service
           container: service
-          image: gcr.io/rancher-283923/service
+          image: gcr.io/${GOOGLE_PROJECT_ID}/service
           tag: $CIRCLE_SHA1
