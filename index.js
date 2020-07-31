@@ -32,7 +32,7 @@ app.post('/post', function (req, res) {
             if (err.code === "ECONNREFUSED") {
                 log.red("Database connection was refused.");
             }
-        }
+        } 
         // Use the connection
         connection.query(`SELECT * FROM ${req.body.table}`, function (error, results, fields) {
             res.send(getResponse(res.status,results));
