@@ -25,7 +25,7 @@ app.get('/getInventory', function (req, res) {
         }
         // Use the connection
         connection.query(`CALL getAllInventoryProducts`, function (error, results, fields) {
-            res.send(results);
+            res.send(results[0]);
             // When done with the connection, release it.
             connection.release();
             // Handle error after the release.
