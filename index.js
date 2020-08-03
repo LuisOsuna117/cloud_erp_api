@@ -47,7 +47,7 @@ app.post('/userLogin', function (req, res) {
             manageError(err);
         } 
         // Use the connection
-        connection.query(`CALL userLogin(${req.body.username},${req.body.password})`, function (error, results, fields) {
+        connection.query(`CALL userLogin('${req.body.username}','${req.body.password}')`, function (error, results, fields) {
             res.send(results);
             // When done with the connection, release it.
             connection.release();
