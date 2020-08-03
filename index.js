@@ -9,19 +9,23 @@ app.use(bodyParser.json());
 /* Database configuration */
 const pool = require("./config/database");
 
+function manageError(err) {
+    log.red(err);
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+        log.red("Database connection was closed.");
+    }
+    if (err.code === "ER_CON_COUNT_ERROR") {
+        log.red("Database has too many connections.");
+    }
+    if (err.code === "ECONNREFUSED") {
+        log.red("Database connection was refused.");
+    }
+}
+
 app.get('/getInventory', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
-            log.red(err);
-            if (err.code === "PROTOCOL_CONNECTION_LOST") {
-                log.red("Database connection was closed.");
-            }
-            if (err.code === "ER_CON_COUNT_ERROR") {
-                log.red("Database has too many connections.");
-            }
-            if (err.code === "ECONNREFUSED") {
-                log.red("Database connection was refused.");
-            }
+            manageError(err);
         }
         // Use the connection
         connection.query(`CALL getAllInventoryProducts`, function (error, results, fields) {
@@ -37,23 +41,14 @@ app.get('/getInventory', function (req, res) {
     });
 });
 
-app.post('/post', function (req, res) {
+app.post('/userLogin', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
-            log.red(err);
-            if (err.code === "PROTOCOL_CONNECTION_LOST") {
-                log.red("Database connection was closed.");
-            }
-            if (err.code === "ER_CON_COUNT_ERROR") {
-                log.red("Database has too many connections.");
-            }
-            if (err.code === "ECONNREFUSED") {
-                log.red("Database connection was refused.");
-            }
+            manageError(err);
         } 
         // Use the connection
-        connection.query(`SELECT * FROM ${req.body.table}`, function (error, results, fields) {
-            res.send(getResponse(res.status,results));
+        connection.query(`CALL userLogin(${req.body.username},${req.body.password})`, function (error, results, fields) {
+            res.send(results);
             // When done with the connection, release it.
             connection.release();
             // Handle error after the release.
@@ -68,20 +63,11 @@ app.post('/post', function (req, res) {
 app.put('/put', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
-            log.red(err);
-            if (err.code === "PROTOCOL_CONNECTION_LOST") {
-                log.red("Database connection was closed.");
-            }
-            if (err.code === "ER_CON_COUNT_ERROR") {
-                log.red("Database has too many connections.");
-            }
-            if (err.code === "ECONNREFUSED") {
-                log.red("Database connection was refused.");
-            }
+            manageError(err);
         }
         // Use the connection
         connection.query(`SELECT * FROM ${req.body.table}`, function (error, results, fields) {
-            res.send(getResponse(res.status, results));
+            res.send(results);
             // When done with the connection, release it.
             connection.release();
             // Handle error after the release.
