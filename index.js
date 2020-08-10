@@ -22,13 +22,14 @@ function manageError(err) {
     }
 }
 
-app.get('/getInventory', function (req, res) {
+app.get('/getPurchases', function (req, res) {
+    var result = {};
     pool.getConnection(function (err, connection) {
         if (err) {
             manageError(err);
         }
         // Use the connection
-        connection.query(`CALL getAllInventoryProducts`, function (error, results, fields) {
+        connection.query(`CALL loadPurchases`, function (error, results, fields) {
             res.send(results[0]);
             // When done with the connection, release it.
             connection.release();
