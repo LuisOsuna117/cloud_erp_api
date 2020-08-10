@@ -33,16 +33,8 @@ app.get('/getPurchases', function (req, res) {
             
             var temp = 0;
             var helper = results[0];
-            for (var element in helper) {
-                if (helper[helper[element]]['purchaseid'] != temp) {
-                    temp = helper[element]['purchaseid'];
-                    result[temp] = {
-                        "purchaseId": helper[element]['purchaseid'],
-                        "supplierName": helper[element]['sname'],
-                        "total": helper[element]['ptotal'],
-                        "date": helper[element]['pdate'],
-                    };
-                }
+            for (var k in helper) {
+                console.log(k, helper[k]);
             }
             res.send(result);
             // When done with the connection, release it.
