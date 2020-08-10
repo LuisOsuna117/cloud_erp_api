@@ -34,7 +34,7 @@ app.get('/getPurchases', function (req, res) {
             var temp = 0;
             var helper = results[0];
             for (var k in helper) {
-                console.log(k, helper[k]);
+                console.log(k, helper[k].purchaseid);
             }
             res.send(result);
             // When done with the connection, release it.
