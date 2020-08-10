@@ -30,10 +30,21 @@ app.get('/getPurchases', function (req, res) {
         }
         // Use the connection
         connection.query(`CALL loadPurchases`, function (error, results, fields) {
-            res.send(results[0]);
-            for (var element in results) {
-                console.log(element);
+            
+            var temp = 0;
+            var helper = results[0];
+            for (var element in helper) {
+                if (helper[helper[element]]['purchaseid'] != temp) {
+                    temp = helper[element]['purchaseid'];
+                    result[temp] = {
+                        "purchaseId": helper[element]['purchaseid'],
+                        "supplierName": helper[element]['sname'],
+                        "total": helper[element]['ptotal'],
+                        "date": helper[element]['pdate'],
+                    };
+                }
             }
+            res.send(result);
             // When done with the connection, release it.
             connection.release();
             // Handle error after the release.
