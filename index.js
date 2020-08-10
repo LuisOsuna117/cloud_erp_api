@@ -31,6 +31,9 @@ app.get('/getPurchases', function (req, res) {
         // Use the connection
         connection.query(`CALL loadPurchases`, function (error, results, fields) {
             res.send(results[0]);
+            for (var element in results[0]) {
+                console.log(element);
+            }
             // When done with the connection, release it.
             connection.release();
             // Handle error after the release.
