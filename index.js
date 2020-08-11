@@ -61,7 +61,7 @@ app.get('/getPurchases', function (req, res) {
                         "pprice": helper[k].pprice,
                         "plastpurchase": helper[k].plastpurchase
                     }
-                    products.push(temprod);
+                    products.push(tmprod);
                 }
             }
             res.send(result);
