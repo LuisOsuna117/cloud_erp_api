@@ -58,7 +58,8 @@ app.get('/getPurchases', function (req, res) {
                     };
                 }
             }
-            res.send(result);
+            console.log(result)
+            res.send(JSON.stringify(result));
             // When done with the connection, release it.
             connection.release();
             // Handle error after the release.
