@@ -76,8 +76,19 @@ app.post('/addPurchase', function (req, res) {
         if (err) {
             manageError(err);
         }
-        console.log(req.body);
-        res.send('Hola');
+        var purchaseid;
+        // Use the connection
+        connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
+            console.log(results);
+            res.send('Hola');
+            // When done with the connection, release it.
+            connection.release();
+            // Handle error after the release.
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`)
+            }
+            // Don't use the connection here, it has been returned to the pool.
+        });
         
     });
 });
