@@ -82,9 +82,9 @@ app.post('/addPurchase', function (req, res) {
             var temp = JSON.parse(JSON.stringify(results[0]));
             for (var k in temp){
                 console.log(k);
-                console.log(temp[k]);
+                console.log(temp[k].result);
             }
-            console.log(temp[0]);
+            console.log(temp[0].result);
             res.send('Hola');
             // When done with the connection, release it.
             connection.release();
