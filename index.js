@@ -23,45 +23,39 @@ function manageError(err) {
 }
 
 app.get('/getPurchases', function (req, res) {
-    var result = {};
+    var result = [];
     pool.getConnection(function (err, connection) {
         if (err) {
             manageError(err);
         }
         // Use the connection
         connection.query(`CALL loadPurchases`, function (error, results, fields) {
-            var temp = 0;
+            var temp = 1;
             var products = [];
+            var tmppurchase;
             var helper = results[0];
             for (var k in helper) {
                 if (temp != helper[k].purchaseid) {
-                    if (temp == 0) {
-                        temp = helper[k].purchaseid;
-                        result[temp] = {
-                            "purchaseid": helper[k].purchaseid,
-                            "sname": helper[k].sname,
-                            "ptotal": helper[k].ptotal,
-                            "pdate": helper[k].pdate,
-                        }
-                    } else {
-                        result.temp.products = products;
-                        temp = helper[k].purchaseid;
-                        result.temp = {
-                            "purchaseid": helper[k].purchaseid,
-                            "sname": helper[k].sname,
-                            "ptotal": helper[k].ptotal,
-                            "pdate": helper[k].pdate,
-                        }
-                    }
-                    
-                } else {
-                    var tmprod = {
-                        "name": helper[k].pname,
+                    temp = helper[k].purchaseid;
+                    result.push(tmppurchase);
+                    products = [];
+
+                }
+                if (temp == helper[k].purchaseid) {
+                    var tmp = {
+                        "pname": helper[k].pname,
                         "pquantity": helper[k].pquantity,
                         "pprice": helper[k].pprice,
                         "plastpurchase": helper[k].plastpurchase
-                    }
-                    products.push(tmprod);
+                    };
+                    products.push(tmp);
+                    tmppurchase = {
+                        "purchaseid": helper[k].purchaseid,
+                        "sname": helper[k].sname,
+                        "ptotal": helper[k].ptotal,
+                        "pdate": helper[k].pdate,
+                        "products": products
+                    };
                 }
             }
             res.send(result);
