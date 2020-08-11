@@ -37,7 +37,7 @@ app.get('/getPurchases', function (req, res) {
                 if (temp != helper[k].purchaseid) {
                     if (temp == 0) {
                         temp = helper[k].purchaseid;
-                        result.temp = {
+                        result[temp] = {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
                             "ptotal": helper[k].ptotal,
