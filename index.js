@@ -80,7 +80,7 @@ app.post('/addPurchase', function (req, res) {
         // Use the connection
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
             var temp = JSON.parse(JSON.stringify(results[0]));
-            console.log(temp.result);
+            console.log(temp);
             res.send('Hola');
             // When done with the connection, release it.
             connection.release();
