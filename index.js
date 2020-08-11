@@ -71,7 +71,16 @@ app.get('/getPurchases', function (req, res) {
         });
     });
 });
-
+app.post('/addPurchase', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        console.log(req.body);
+        res.send('Hola');
+        
+    });
+});
 app.post('/userLogin', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
