@@ -79,7 +79,7 @@ app.post('/addPurchase', function (req, res) {
         var purchaseid;
         // Use the connection
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
-            console.log(results);
+            console.log(results[0].result);
             res.send('Hola');
             // When done with the connection, release it.
             connection.release();
