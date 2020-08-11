@@ -30,7 +30,7 @@ app.get('/getPurchases', function (req, res) {
         }
         // Use the connection
         connection.query(`CALL loadPurchases`, function (error, results, fields) {
-            var temp = 1;
+            var temp = 0;
             var products = [];
             var helper = results[0];
             for (var k in helper) {
