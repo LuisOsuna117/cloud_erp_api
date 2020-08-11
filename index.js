@@ -58,6 +58,7 @@ app.get('/getPurchases', function (req, res) {
                     };
                 }
             }
+            result.push(tmppurchase);
             console.log(result)
             res.send(JSON.stringify(result));
             // When done with the connection, release it.
