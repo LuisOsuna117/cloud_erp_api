@@ -108,7 +108,7 @@ app.post('/addPurchase', function (req, res) {
 
             // When done with the connection, release it.
             connection.release();
-            res.sendstatus(done);
+            res.sendStatus(done);
         });
     });
 });
