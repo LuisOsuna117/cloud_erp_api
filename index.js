@@ -105,11 +105,11 @@ app.post('/addPurchase', function (req, res) {
                 done = 500;
             }
             // Don't use the connection here, it has been returned to the pool.
+
+            // When done with the connection, release it.
+            connection.release();
+            res.sendstatus(done);
         });
-        
-        // When done with the connection, release it.
-        connection.release();
-        res.sendStatus();
     });
 });
 
