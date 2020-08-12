@@ -77,7 +77,7 @@ app.post('/addPurchase', function (req, res) {
             manageError(err);
         }
         var purchaseid;
-        var done = 1;
+        var done = 200;
         // Use the connection
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
             var temp = JSON.parse(JSON.stringify(results[0]));
@@ -87,12 +87,13 @@ app.post('/addPurchase', function (req, res) {
             // Handle error after the release.
             if (error) {
                 log.red(`MySQLERR ${error.code}: ${error.message}`);
-                done = 0;
+                done = 500;
             }
             // Don't use the connection here, it has been returned to the pool.
         });
         var products = req.body.products;
         for (var k in products) {
+            console.log(products[k]);
             connection.query(`CALL addInventoryNPurchaseDesc(${purchaseid},'${products[k].pname}',${products[k].pprice},${products[k].pquantity})`, function (error, results, fields) {
                 
                 // When done with the connection, release it.
@@ -100,7 +101,7 @@ app.post('/addPurchase', function (req, res) {
                 // Handle error after the release.
                 if (error) {
                     log.red(`MySQLERR ${error.code}: ${error.message}`)
-                    done = 0;
+                    done = 500;
                 }
                 // Don't use the connection here, it has been returned to the pool.
             });
