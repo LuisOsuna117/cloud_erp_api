@@ -76,12 +76,29 @@ app.post('/addPurchase', function (req, res) {
         if (err) {
             manageError(err);
         }
-        var purchaseid;
+        var temp;
         var done = 200;
         // Use the connection
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
-            var temp = JSON.parse(JSON.stringify(results[0]));
+            temp = JSON.parse(JSON.stringify(results[0]));
             purchaseid = temp[0].result;
+            console.log(purchaseid);
+            var products = req.body.products;
+            for (var k in products) {
+                console.log(products[k]);
+                console.log(purchaseid);
+                console.log(products[k].pname);
+                console.log(products[k].pprice);
+                console.log(products[k].pquantity);
+                connection.query(`CALL addInventoryNPurchaseDesc(${purchaseid},'${products[k].pname}',${products[k].pprice},${products[k].pquantity})`, function (error, results, fields) {
+                    // Handle error after the release.
+                    if (error) {
+                        log.red(`MySQLERR ${error.code}: ${error.message}`)
+                        done = 500;
+                    }
+                    // Don't use the connection here, it has been returned to the pool.
+                });
+            }
             // Handle error after the release.
             if (error) {
                 log.red(`MySQLERR ${error.code}: ${error.message}`);
@@ -89,22 +106,7 @@ app.post('/addPurchase', function (req, res) {
             }
             // Don't use the connection here, it has been returned to the pool.
         });
-        var products = req.body.products;
-        for (var k in products) {
-            console.log(products[k]);
-            console.log(purchaseid);
-            console.log(products[k].pname);
-            console.log(products[k].pprice);
-            console.log(products[k].pquantity);
-            connection.query(`CALL addInventoryNPurchaseDesc(${purchaseid},'${products[k].pname}',${products[k].pprice},${products[k].pquantity})`, function (error, results, fields) {
-                // Handle error after the release.
-                if (error) {
-                    log.red(`MySQLERR ${error.code}: ${error.message}`)
-                    done = 500;
-                }
-                // Don't use the connection here, it has been returned to the pool.
-            });
-        }
+        
         // When done with the connection, release it.
         connection.release();
         res.send(done);
