@@ -92,6 +92,10 @@ app.post('/addPurchase', function (req, res) {
         var products = req.body.products;
         for (var k in products) {
             console.log(products[k]);
+            console.log(purchaseid);
+            console.log(products[k].pname);
+            console.log(products[k].pprice);
+            console.log(products[k].pquantity);
             connection.query(`CALL addInventoryNPurchaseDesc(${purchaseid},'${products[k].pname}',${products[k].pprice},${products[k].pquantity})`, function (error, results, fields) {
                 // Handle error after the release.
                 if (error) {
