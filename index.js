@@ -82,8 +82,6 @@ app.post('/addPurchase', function (req, res) {
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
             var temp = JSON.parse(JSON.stringify(results[0]));
             purchaseid = temp[0].result;
-            // When done with the connection, release it.
-            connection.release();
             // Handle error after the release.
             if (error) {
                 log.red(`MySQLERR ${error.code}: ${error.message}`);
@@ -95,9 +93,6 @@ app.post('/addPurchase', function (req, res) {
         for (var k in products) {
             console.log(products[k]);
             connection.query(`CALL addInventoryNPurchaseDesc(${purchaseid},'${products[k].pname}',${products[k].pprice},${products[k].pquantity})`, function (error, results, fields) {
-                
-                // When done with the connection, release it.
-                connection.release();
                 // Handle error after the release.
                 if (error) {
                     log.red(`MySQLERR ${error.code}: ${error.message}`)
@@ -106,9 +101,12 @@ app.post('/addPurchase', function (req, res) {
                 // Don't use the connection here, it has been returned to the pool.
             });
         }
+        // When done with the connection, release it.
+        connection.release();
         res.send(done);
     });
 });
+
 app.post('/userLogin', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
