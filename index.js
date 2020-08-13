@@ -30,7 +30,7 @@ app.get('/getPurchases', function (req, res) {
         }
         // Use the connection
         connection.query('SELECT purchaseid FROM purchases LIMIT 1', function (error, results, fields) { 
-            console.log(results);
+            console.log(`id: ${results[0].purchaseid}`);
         })
         connection.query(`CALL loadPurchases`, function (error, results, fields) {
             var temp = 1;
@@ -38,12 +38,10 @@ app.get('/getPurchases', function (req, res) {
             var tmppurchase;
             var helper = results[0];
             for (var k in helper) {
-                console.log(temp)
                 if (temp != helper[k].purchaseid && tmppurchase != null) {
                     temp = helper[k].purchaseid;
                     result.push(tmppurchase);
                     products = [];
-
                 }
                 if (temp == helper[k].purchaseid) {
                     var tmp = {
