@@ -46,12 +46,12 @@ app.get('/getPurchases', function (req, res) {
                     }
                     if (temp == helper[k].purchaseid) {
                         var date = new Date(helper[k].plastpurchase);
-                        console.log(`${date.getDay()}-${date.getMonth}-${date.getFullYear()}`); 
+                        console.log(date.toISOString().substring(0, 10));
                         var tmp = {
                             "pname": helper[k].pname,
                             "pquantity": helper[k].pquantity,
                             "pprice": helper[k].pprice,
-                            "plastpurchase": `${date.getDay()}-${date.getMonth}-${date.getFullYear()}`
+                            "plastpurchase": date.toISOString().substring(0, 10)
                         };
                         products.push(tmp);
                         date = new Date(helper[k].pdate);
@@ -59,7 +59,7 @@ app.get('/getPurchases', function (req, res) {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
                             "ptotal": helper[k].ptotal,
-                            "pdate": `${date.getDay()}-${date.getMonth}-${date.getFullYear()}`,
+                            "pdate": date.toISOString().substring(0, 10),
                             "products": products
                         };
                     }
