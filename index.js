@@ -45,18 +45,22 @@ app.get('/getPurchases', function (req, res) {
                         products = [];
                     }
                     if (temp == helper[k].purchaseid) {
+                        var date = helper[k].plastpurchase;
+                        date = date.toString();
                         var tmp = {
                             "pname": helper[k].pname,
                             "pquantity": helper[k].pquantity,
                             "pprice": helper[k].pprice,
-                            "plastpurchase": helper[k].plastpurchase.substring(0, 10)
+                            "plastpurchase": date.substring(0, 10)
                         };
                         products.push(tmp);
+                        date = helper[k].pdate;
+                        date = date.toString();
                         tmppurchase = {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
                             "ptotal": helper[k].ptotal,
-                            "pdate": helper[k].pdate.substring(0, 10),
+                            "pdate": date.substring(0, 10),
                             "products": products
                         };
                     }
