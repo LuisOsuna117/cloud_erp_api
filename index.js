@@ -45,23 +45,21 @@ app.get('/getPurchases', function (req, res) {
                         products = [];
                     }
                     if (temp == helper[k].purchaseid) {
-                        var date = parseISOString(helper[k].plastpurchase);
-
-                        console.log(isoFormatDMY(date)) 
+                        var date = new Date(helper[k].plastpurchase);
+                        console.log(`${date.getDay()}-${date.getMonth}-${date.getFullYear()}`); 
                         var tmp = {
                             "pname": helper[k].pname,
                             "pquantity": helper[k].pquantity,
                             "pprice": helper[k].pprice,
-                            "plastpurchase": isoFormatDMY(date)
+                            "plastpurchase": `${date.getDay()}-${date.getMonth}-${date.getFullYear()}`
                         };
                         products.push(tmp);
-                        date = helper[k].pdate;
-                        //date = date.toString();
+                        date = new Date(helper[k].pdate);
                         tmppurchase = {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
                             "ptotal": helper[k].ptotal,
-                            "pdate": isoFormatDMY(date),
+                            "pdate": `${date.getDay()}-${date.getMonth}-${date.getFullYear()}`,
                             "products": products
                         };
                     }
@@ -160,11 +158,6 @@ app.put('/put', function (req, res) {
         });
     });
 });
-
-function isoFormatDMY(d) {
-    function pad(n) { return (n < 10 ? '0' : '') + n }
-    return pad(d.getUTCDate()) + '/' + pad(d.getUTCMonth() + 1) + '/' + d.getUTCFullYear();
-}
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
