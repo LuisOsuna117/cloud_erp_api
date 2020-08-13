@@ -45,13 +45,14 @@ app.get('/getPurchases', function (req, res) {
                         products = [];
                     }
                     if (temp == helper[k].purchaseid) {
-                        var date = helper[k].plastpurchase;
-                        //date = date.toString();
+                        var date = parseISOString(helper[k].plastpurchase);
+
+                        console.log(isoFormatDMY(date)) 
                         var tmp = {
                             "pname": helper[k].pname,
                             "pquantity": helper[k].pquantity,
                             "pprice": helper[k].pprice,
-                            "plastpurchase": date.substring(0, 10)
+                            "plastpurchase": isoFormatDMY(date)
                         };
                         products.push(tmp);
                         date = helper[k].pdate;
@@ -60,7 +61,7 @@ app.get('/getPurchases', function (req, res) {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
                             "ptotal": helper[k].ptotal,
-                            "pdate": date.substring(0, 10),
+                            "pdate": isoFormatDMY(date),
                             "products": products
                         };
                     }
@@ -160,7 +161,10 @@ app.put('/put', function (req, res) {
     });
 });
 
-
+function isoFormatDMY(d) {
+    function pad(n) { return (n < 10 ? '0' : '') + n }
+    return pad(d.getUTCDate()) + '/' + pad(d.getUTCMonth() + 1) + '/' + d.getUTCFullYear();
+}
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
