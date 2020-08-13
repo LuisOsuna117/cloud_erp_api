@@ -28,49 +28,52 @@ app.get('/getPurchases', function (req, res) {
         if (err) {
             manageError(err);
         }
+        var purchaseid;
         // Use the connection
         connection.query('SELECT purchaseid FROM purchases LIMIT 1', function (error, results, fields) { 
-            console.log(`id: ${results[0].purchaseid}`);
+            purchaseid = results[0].purchaseid;
+            connection.query(`CALL loadPurchases`, function (error, results, fields) {
+                console.log(`id: ${purchaseid}`)
+                var temp = purchaseid;
+                var products = [];
+                var tmppurchase;
+                var helper = results[0];
+                for (var k in helper) {
+                    if (temp != helper[k].purchaseid && tmppurchase != null) {
+                        temp = helper[k].purchaseid;
+                        result.push(tmppurchase);
+                        products = [];
+                    }
+                    if (temp == helper[k].purchaseid) {
+                        var tmp = {
+                            "pname": helper[k].pname,
+                            "pquantity": helper[k].pquantity,
+                            "pprice": helper[k].pprice,
+                            "plastpurchase": helper[k].plastpurchase
+                        };
+                        products.push(tmp);
+                        tmppurchase = {
+                            "purchaseid": helper[k].purchaseid,
+                            "sname": helper[k].sname,
+                            "ptotal": helper[k].ptotal,
+                            "pdate": helper[k].pdate,
+                            "products": products
+                        };
+                    }
+                }
+                result.push(tmppurchase);
+                console.log(result)
+                res.send(JSON.parse(JSON.stringify(result)));
+                // When done with the connection, release it.
+                connection.release();
+                // Handle error after the release.
+                if (error) {
+                    log.red(`MySQLERR ${error.code}: ${error.message}`)
+                }
+                // Don't use the connection here, it has been returned to the pool.
+            });
         })
-        connection.query(`CALL loadPurchases`, function (error, results, fields) {
-            var temp = 1;
-            var products = [];
-            var tmppurchase;
-            var helper = results[0];
-            for (var k in helper) {
-                if (temp != helper[k].purchaseid && tmppurchase != null) {
-                    temp = helper[k].purchaseid;
-                    result.push(tmppurchase);
-                    products = [];
-                }
-                if (temp == helper[k].purchaseid) {
-                    var tmp = {
-                        "pname": helper[k].pname,
-                        "pquantity": helper[k].pquantity,
-                        "pprice": helper[k].pprice,
-                        "plastpurchase": helper[k].plastpurchase
-                    };
-                    products.push(tmp);
-                    tmppurchase = {
-                        "purchaseid": helper[k].purchaseid,
-                        "sname": helper[k].sname,
-                        "ptotal": helper[k].ptotal,
-                        "pdate": helper[k].pdate,
-                        "products": products
-                    };
-                }
-            }
-            result.push(tmppurchase);
-            console.log(result)
-            res.send(JSON.parse(JSON.stringify(result)));
-            // When done with the connection, release it.
-            connection.release();
-            // Handle error after the release.
-            if (error) {
-                log.red(`MySQLERR ${error.code}: ${error.message}`)
-            }
-            // Don't use the connection here, it has been returned to the pool.
-        });
+        
     });
 });
 app.post('/addPurchase', function (req, res) {
