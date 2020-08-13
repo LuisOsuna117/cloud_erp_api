@@ -49,14 +49,14 @@ app.get('/getPurchases', function (req, res) {
                             "pname": helper[k].pname,
                             "pquantity": helper[k].pquantity,
                             "pprice": helper[k].pprice,
-                            "plastpurchase": helper[k].plastpurchase.substrig(0, 10)
+                            "plastpurchase": helper[k].plastpurchase.substring(0, 10)
                         };
                         products.push(tmp);
                         tmppurchase = {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
                             "ptotal": helper[k].ptotal,
-                            "pdate": helper[k].pdate.substrig(0, 10),
+                            "pdate": helper[k].pdate.substring(0, 10),
                             "products": products
                         };
                     }
