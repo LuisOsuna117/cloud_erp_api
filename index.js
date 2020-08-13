@@ -46,7 +46,7 @@ app.get('/getPurchases', function (req, res) {
                     }
                     if (temp == helper[k].purchaseid) {
                         var date = helper[k].plastpurchase;
-                        date = date.toString();
+                        //date = date.toString();
                         var tmp = {
                             "pname": helper[k].pname,
                             "pquantity": helper[k].pquantity,
@@ -55,7 +55,7 @@ app.get('/getPurchases', function (req, res) {
                         };
                         products.push(tmp);
                         date = helper[k].pdate;
-                        date = date.toString();
+                        //date = date.toString();
                         tmppurchase = {
                             "purchaseid": helper[k].purchaseid,
                             "sname": helper[k].sname,
