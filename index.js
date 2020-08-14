@@ -86,8 +86,7 @@ app.get('/getInventory', function (req, res) {
             manageError(err);
         }
         connection.query('CALL getInventory()', function (error, results, fields) {
-            console.log(results[0]);
-            res.sendStatus(200);
+            res.send(results[0]);
             if (error) {
                 log.red(`MySQLERR ${error.code}: ${error.message}`);
             }
