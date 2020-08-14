@@ -79,6 +79,22 @@ app.get('/getPurchases', function (req, res) {
         
     });
 });
+
+app.get('/getInventory', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        connection.query('CALL getInventory()', function (error, results, fields) {
+            console.log(results[0]);
+            res.sendStatus(200);
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`);
+            }
+        })
+    })
+});
+
 app.post('/addPurchase', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
