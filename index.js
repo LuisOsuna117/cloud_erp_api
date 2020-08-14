@@ -86,6 +86,8 @@ app.post('/addPurchase', function (req, res) {
         }
         var temp;
         var done = 200;
+        console.log(req.body);
+        console.log(typeof(req.body))
         // Use the connection
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
             temp = JSON.parse(JSON.stringify(results[0]));
