@@ -205,7 +205,7 @@ app.post('/addUser', function (req, res) {
             manageError(err);
         }
         // Use the connection
-        connection.query(`CALL addUser(${req.body.fname},${req.body.lname},${req.body.mail},${req.body.phone},${req.body.street},${req.body.suburb},${req.body.city},${req.body.salary})`, function (error, results, fields) {
+        connection.query(`CALL addUser('${req.body.fname}','${req.body.lname}','${req.body.mail}','${req.body.phone}','${req.body.street}','${req.body.suburb}','${req.body.city}',${req.body.salary})`, function (error, results, fields) {
             res.send(results);
             // When done with the connection, release it.
             connection.release();
