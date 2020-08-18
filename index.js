@@ -30,7 +30,7 @@ app.get('/getPurchases', function (req, res) {
         }
         var purchaseid;
         // Use the connection
-        connection.query('SELECT purchaseid FROM purchases LIMIT 1', function (error, results, fields) { 
+        connection.query('SELECT purchaseid FROM purchases LIMIT 1', function (error, results, fields) {
             purchaseid = results[0].purchaseid;
             connection.query(`CALL loadPurchases`, function (error, results, fields) {
                 console.log(`id: ${purchaseid}`)
@@ -76,7 +76,7 @@ app.get('/getPurchases', function (req, res) {
                 // Don't use the connection here, it has been returned to the pool.
             });
         })
-        
+
     });
 });
 
@@ -144,7 +144,7 @@ app.post('/addPurchase', function (req, res) {
         var temp;
         var done = 200;
         console.log(req.body);
-        console.log(typeof(req.body))
+        console.log(typeof (req.body))
         // Use the connection
         connection.query(`CALL addPurchase('${req.body.sname}','${req.body.ptotal}')`, function (error, results, fields) {
             temp = JSON.parse(JSON.stringify(results[0]));
@@ -199,13 +199,13 @@ app.post('/userLogin', function (req, res) {
     });
 });
 
-app.put('/put', function (req, res) {
+app.post('/addUser', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
             manageError(err);
         }
         // Use the connection
-        connection.query(`SELECT * FROM ${req.body.table}`, function (error, results, fields) {
+        connection.query(`CALL addUser(${req.body.fname},${req.body.lname},${req.body.mail},${req.body.phone},${req.body.street},${req.body.suburb},${req.body.city},${req.body.salary})`, function (error, results, fields) {
             res.send(results);
             // When done with the connection, release it.
             connection.release();
