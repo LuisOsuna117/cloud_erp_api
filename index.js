@@ -94,6 +94,48 @@ app.get('/getInventory', function (req, res) {
     })
 });
 
+app.get('/getClients', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        connection.query('CALL getClients()', function (error, results, fields) {
+            res.send(results[0]);
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`);
+            }
+        })
+    })
+});
+
+app.get('/getSuppliers', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        connection.query('CALL getSuppliers()', function (error, results, fields) {
+            res.send(results[0]);
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`);
+            }
+        })
+    })
+});
+
+app.get('/getUsers', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        connection.query('CALL getUsers()', function (error, results, fields) {
+            res.send(results[0]);
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`);
+            }
+        })
+    })
+});
+
 app.post('/addPurchase', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
