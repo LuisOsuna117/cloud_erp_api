@@ -256,7 +256,7 @@ app.post('/addSale', function (req, res) {
             saleid = temp[0].result;
             var products = req.body.products;
             for (var k in products) {
-                connection.query(`CALL addInventoryNPurchaseDesc(${saleid},'${products[k].pname}',${products[k].pquantity})`, function (error, results, fields) {
+                connection.query(`CALL addSaleDesc(${saleid},'${products[k].pname}',${products[k].pquantity})`, function (error, results, fields) {
                     // Handle error after the release.
                     if (error) {
                         log.red(`MySQLERR ${error.code}: ${error.message}`)
