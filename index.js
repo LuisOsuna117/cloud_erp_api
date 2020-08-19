@@ -32,7 +32,7 @@ app.get('/getPurchases', function (req, res) {
         // Use the connection
         connection.query('SELECT purchaseid FROM purchases ORDER BY purchaseid DESC LIMIT 1', function (error, results, fields) {
             purchaseid = results[0].purchaseid;
-            connection.query(`CALL loadPurchases`, function (error, results, fields) {
+            connection.query(`CALL loadPurchases()`, function (error, results, fields) {
                 console.log(`id: ${purchaseid}`)
                 var temp = purchaseid;
                 var products = [];
@@ -79,6 +79,67 @@ app.get('/getPurchases', function (req, res) {
 
     });
 });
+
+
+app.get('/getSales', function (req, res) {
+    var result = [];
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        var saleid;
+        // Use the connection
+        connection.query('SELECT saleid FROM sales ORDER BY saleid DESC LIMIT 1', function (error, results, fields) {
+            saleid = results[0].saleid;
+            connection.query(`CALL getSales()`, function (error, results, fields) {
+                console.log(`id: ${saleid}`)
+                var temp = saleid;
+                var products = [];
+                var tmppurchase;
+                var helper = results[0];
+                for (var k in helper) {
+                    if (temp != helper[k].saleid && tmppurchase != null) {
+                        temp = helper[k].saleid;
+                        result.push(tmppurchase);
+                        products = [];
+                    }
+                    if (temp == helper[k].saleid) {
+                        var date = new Date(helper[k].pdate);
+                        console.log(date.toISOString().substring(0, 10));
+                        var tmp = {
+                            "pname": helper[k].pname,
+                            "pquantity": helper[k].mquantity,
+                        };
+                        products.push(tmp);
+                        date = new Date(helper[k].pdate);
+                        tmppurchase = {
+                            "saleid": helper[k].saleid,
+                            "sname": helper[k].sname,
+                            "sdesc": helper[k].sdesc,
+                            "stotal": helper[k].stotal,
+                            "pdate": date.toISOString().substring(0, 10),
+                            "cname": helper[k].cname,
+                            "cphone": helper[k].cphone,
+                            "products": products
+                        };
+                    }
+                }
+                result.push(tmppurchase);
+                console.log(result)
+                res.send(JSON.parse(JSON.stringify(result)));
+                // When done with the connection, release it.
+                connection.release();
+                // Handle error after the release.
+                if (error) {
+                    log.red(`MySQLERR ${error.code}: ${error.message}`)
+                }
+                // Don't use the connection here, it has been returned to the pool.
+            });
+        })
+
+    });
+});
+
 
 app.get('/getInventory', function (req, res) {
     pool.getConnection(function (err, connection) {
