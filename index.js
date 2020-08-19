@@ -241,6 +241,45 @@ app.post('/addPurchase', function (req, res) {
     });
 });
 
+app.post('/addSale', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        var temp;
+        var done = 200;
+        console.log(req.body);
+        console.log(typeof (req.body))
+        // Use the connection
+        connection.query(`CALL addSale('${req.body.cname}','${req.body.sname}','${req.body.desc}','${req.body.total}')`, function (error, results, fields) {
+            temp = JSON.parse(JSON.stringify(results[0]));
+            saleid = temp[0].result;
+            console.log(purchaseid);
+            var products = req.body.products;
+            for (var k in products) {
+                connection.query(`CALL addInventoryNPurchaseDesc(${saleid},'${products[k].pname}',${products[k].pquantity})`, function (error, results, fields) {
+                    // Handle error after the release.
+                    if (error) {
+                        log.red(`MySQLERR ${error.code}: ${error.message}`)
+                        done = 500;
+                    }
+                    // Don't use the connection here, it has been returned to the pool.
+                });
+            }
+            // Handle error after the release.
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`);
+                done = 500;
+            }
+            // Don't use the connection here, it has been returned to the pool.
+
+            // When done with the connection, release it.
+            connection.release();
+            res.sendStatus(done);
+        });
+    });
+});
+
 app.post('/userLogin', function (req, res) {
     pool.getConnection(function (err, connection) {
         if (err) {
