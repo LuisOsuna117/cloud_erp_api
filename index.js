@@ -30,7 +30,7 @@ app.get('/getPurchases', function (req, res) {
         }
         var purchaseid;
         // Use the connection
-        connection.query('SELECT purchaseid FROM purchases LIMIT 1', function (error, results, fields) {
+        connection.query('SELECT purchaseid FROM purchases ORDER BY purchaseid DESC LIMIT 1', function (error, results, fields) {
             purchaseid = results[0].purchaseid;
             connection.query(`CALL loadPurchases`, function (error, results, fields) {
                 console.log(`id: ${purchaseid}`)
