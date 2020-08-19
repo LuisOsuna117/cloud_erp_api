@@ -218,6 +218,25 @@ app.post('/addUser', function (req, res) {
     });
 });
 
+app.post('/addClient', function (req, res) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            manageError(err);
+        }
+        // Use the connection
+        connection.query(`CALL addClient('${req.body.name}','${req.body.mail}','${req.body.phone}','${req.body.street}','${req.body.suburb}','${req.body.city}')`, function (error, results, fields) {
+            res.send(results);
+            // When done with the connection, release it.
+            connection.release();
+            // Handle error after the release.
+            if (error) {
+                log.red(`MySQLERR ${error.code}: ${error.message}`)
+            }
+            // Don't use the connection here, it has been returned to the pool.
+        });
+    });
+});
+
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
