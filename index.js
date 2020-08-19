@@ -254,7 +254,6 @@ app.post('/addSale', function (req, res) {
         connection.query(`CALL addSale('${req.body.cname}','${req.body.sname}','${req.body.desc}','${req.body.total}')`, function (error, results, fields) {
             temp = JSON.parse(JSON.stringify(results[0]));
             saleid = temp[0].result;
-            console.log(purchaseid);
             var products = req.body.products;
             for (var k in products) {
                 connection.query(`CALL addInventoryNPurchaseDesc(${saleid},'${products[k].pname}',${products[k].pquantity})`, function (error, results, fields) {
